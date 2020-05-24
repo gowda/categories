@@ -1,4 +1,5 @@
 # categories-api
+![test](https://github.com/gowda/categories-api/workflows/test/badge.svg)
 
 ## Run
 ### Install dependencies
