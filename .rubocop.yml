@@ -31,3 +31,6 @@ Style/ExponentialNotation:
   Enabled: true
 Style/SlicingWithRange:
   Enabled: true
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
