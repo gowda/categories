@@ -1,0 +1,7 @@
+#!/bin/bash
+
+function __main {
+    systemctl stop puma.service
+}
+
+__main

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+function __configure {
+    cd /opt/categories-api
+
+    bundle config path vendor/bundle
+}
+
+function __main {
+    RAILS_ENV=production bundle install --jobs 4 --retry 3
+}
+
+__configure && __main

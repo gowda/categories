@@ -1,0 +1,38 @@
+version: 0.42.0
+os: linux
+files:
+  - source: nginx.conf
+    destination: /etc/nginx.config
+  - source: puma.service
+    destination: /etc/systemd/system/puma.service
+  - source: /
+    destination: /opt/categories-api
+permissions:
+  - object: /opt/categories-api
+    owner: ubuntu
+    group: ubuntu
+    pattern: "*"
+    mode: 775
+    type:
+      - file
+      - directory
+hooks:
+  BeforeInstall:
+    - location: scripts/install_dependencies
+      timeout: 300
+      runas: root
+    - location: scripts/install_ruby
+      timeout: 5000
+      runas: ubuntu
+  AfterInstall:
+    - location: scripts/bundle_install
+      timeout: 300
+      runas: ubuntu
+  ApplicationStart:
+    - location: scripts/start_puma
+      timeout: 300
+      runas: root
+  ApplicationStop:
+    - location: scripts/stop_puma
+      timeout: 300
+      runas: root

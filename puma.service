@@ -1,0 +1,19 @@
+[Unit]
+Description=Puma HTTP Server
+After=network.target
+
+[Service]
+Type=simple
+
+User=webapp
+
+WorkingDirectory=/opt/categories-api
+
+Environment=PUMA_DEBUG=1
+
+ExecStart=/opt/categories-api/bin/puma -C /opt/categories-api/config/puma.rb ../config.ru
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
