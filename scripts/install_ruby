@@ -17,10 +17,11 @@ function __configure {
 }
 
 function __main {
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] || __configure
   rvm install 2.6
 
   gem install rake
   gem install bundler
 }
 
-__configure && __main
+__main
