@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 
-User=webapp
+User=ubuntu
 
 WorkingDirectory=/opt/categories-api
 
