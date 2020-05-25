@@ -23,6 +23,9 @@ hooks:
     - location: scripts/cleanup_previous
       timeout: 6000
       runas: root
+    - location: scripts/setup_puma
+      timeout: 6000
+      runas: root
   AfterInstall:
     - location: scripts/bundle_install
       timeout: 6000
