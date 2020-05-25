@@ -5,6 +5,8 @@ files:
     destination: /etc/nginx/sites-enabled
   - source: puma.service
     destination: /etc/systemd/system/
+  - source: /
+    destination: /opt/categories-api
 permissions:
   - object: /opt/categories-api
     owner: ubuntu
@@ -18,6 +20,9 @@ hooks:
     - location: scripts/install_ruby
       timeout: 6000
       runas: ubuntu
+    - location: scripts/cleanup_previous
+      timeout: 6000
+      runas: root
   AfterInstall:
     - location: scripts/bundle_install
       timeout: 6000
