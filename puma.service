@@ -11,8 +11,8 @@ WorkingDirectory=/opt/categories-api
 
 Environment=PUMA_DEBUG=1
 
-ExecStart=/opt/categories-api/bin/puma -C /opt/categories-api/config/puma.rb ../config.ru
-
+# ExecStart=/opt/categories-api/bin/puma -C /opt/categories-api/config/puma.rb ../config.ru
+ExecStart=/home/ubuntu/.rvm/bin/rvm all do /opt/categories-api/bin/puma -C /opt/categories-api/config/puma.rb ../config.ru
 Restart=always
 
 [Install]
