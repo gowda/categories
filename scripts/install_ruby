@@ -12,12 +12,13 @@ function __configure {
   fi
 
   curl -sSL https://get.rvm.io | bash -s stable
-
-  source /home/ubuntu/.rvm/scripts/rvm
 }
 
 function __main {
   [[ -s "$HOME/.rvm/scripts/rvm" ]] || __configure
+
+  source /home/ubuntu/.rvm/scripts/rvm
+
   rvm install 2.6
 
   gem install rake
