@@ -1,10 +1,10 @@
 version: 0.0
 os: linux
 files:
-  - source: nginx.conf
-    destination: /etc/nginx.config
+  - source: api.categories.conf
+    destination: /etc/nginx/sites-enabled
   - source: puma.service
-    destination: /etc/systemd/system/puma.service
+    destination: /etc/systemd/system/
   - source: /
     destination: /opt/categories-api
 permissions:
