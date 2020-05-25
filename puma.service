@@ -12,7 +12,7 @@ WorkingDirectory=/opt/categories-api
 Environment=PUMA_DEBUG=1
 Environment=APP_DIR=/opt/categories-api
 # ExecStart=${APP_DIR}/bin/puma -C ${APP_DIR}/config/puma.rb ../config.ru
-ExecStart=/home/ubuntu/.rvm/bin/rvm all do ${APP_DIR}/bin/puma -C ${APP_DIR}/config/puma.rb ${APP_DIR}/config.ru
+ExecStart=/home/ubuntu/.rvm/bin/rvm all do ${APP_DIR}/bin/puma -C ${APP_DIR}/config/puma.rb -b unix://var/run/puma-categories-api.sock ${APP_DIR}/config.ru
 Restart=always
 
 [Install]
