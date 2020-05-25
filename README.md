@@ -146,12 +146,7 @@ $ aws deploy create-deployment-group --application-name categories-api \
 ```
 
 ### Prepare EC2 instance
-Create an EC2 instance using AWS Console. Then install AWS CodeDeploy agent on the
-instance:
-```bash
-$ scp -v -i <key> scripts/install_codedeploy_agent ubuntu@<ec2-hostname>:/tmp/
-$ ssh -v -i <key> ubuntu@<ec2-hostname> /tmp/install_codedeploy_agent
-```
+Create an EC2 instance using AWS Console by following instructions at [AWS Documentation](https://docs.aws.amazon.com/codedeploy/latest/userguide/instances-ec2-create.html).
 
 ### Deploy the revision
 To deploy from the current `HEAD`:
