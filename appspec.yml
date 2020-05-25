@@ -11,11 +11,7 @@ permissions:
   - object: /opt/categories-api
     owner: ubuntu
     group: ubuntu
-    pattern: "*"
     mode: 775
-    type:
-      - file
-      - directory
 hooks:
   BeforeInstall:
     - location: scripts/install_dependencies
