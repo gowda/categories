@@ -5,8 +5,6 @@ files:
     destination: /etc/nginx/sites-enabled
   - source: puma.service
     destination: /etc/systemd/system/
-  - source: /
-    destination: /opt/categories-api
 permissions:
   - object: /opt/categories-api
     owner: ubuntu
