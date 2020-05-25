@@ -119,3 +119,48 @@ Body:
   "errors": { "label": ["can't be blank"] }
 }
 ```
+
+## Deployment
+Application is deployed using AWS CodeDeploy.
+
+### Setup CodeDeploy configuration
+Create an IAM Service Role for CodeDeploy using AWS Console by following
+the instructions on [AWS documentation](https://docs.aws.amazon.com/codedeploy/latest/userguide/getting-started-create-service-role.html#getting-started-get-service-role-cli).
+
+Get ARN for service role:
+```bash
+$ export CAPI_CODE_DEPLOY_ROLE=$(aws iam get-role --role-name CategoriesAPICodeDeployRole --query "Role.Arn" --output text)
+```
+
+#### Create application
+```bash
+$ aws deploy create-application --application-name categories-api
+```
+
+#### Create deployment group
+```bash
+$ aws deploy create-deployment-group --application-name categories-api \
+      --ec2-tag-filters Key=application,Type=KEY_AND_VALUE,Value=categories-api \
+      --deployment-group-name categories-api-deployment-group \
+      --service-role-arn $CAPI_CODE_DEPLOY_ROLE
+```
+
+### Prepare EC2 instance
+Create an EC2 instance using AWS Console. Then install AWS CodeDeploy agent on the
+instance:
+```bash
+$ scp -v -i <key> scripts/install_codedeploy_agent ubuntu@<ec2-hostname>:/tmp/
+$ ssh -v -i <key> ubuntu@<ec2-hostname> /tmp/install_codedeploy_agent
+```
+
+### Deploy the revision
+To deploy from the current `HEAD`:
+
+```bash
+$ aws deploy create-deployment \
+  --application-name categories-api \
+  --deployment-config-name CodeDeployDefault.OneAtATime \
+  --deployment-group-name categories-api-deployment-group \
+  --description "Deployment from master at $(date)" \
+  --github-location repository=repository,commitId=$(git rev-parse HEAD)
+```

@@ -1,25 +1,25 @@
 #!/bin/bash
 
 function __configure {
-    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E52529D4
+  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E52529D4
 
-    wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc \
-        | apt-key add -
+  wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc \
+    | apt-key add -
 
-    cat > /etc/apt/sources.list.d/mongodb-org-4.2.list <<EOF
+  cat > /etc/apt/sources.list.d/mongodb-org-4.2.list <<EOF
 deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse
 EOF
-    apt-get update
+  apt-get update
 }
 
 function __main {
-    apt-get install -y mongodb-org=4.2.6 \
-            mongodb-org-server=4.2.6 \
-            mongodb-org-shell=4.2.6 \
-            mongodb-org-mongos=4.2.6 \
-            mongodb-org-tools=4.2.6
+  apt-get install -y mongodb-org=4.2.6 \
+          mongodb-org-server=4.2.6 \
+          mongodb-org-shell=4.2.6 \
+          mongodb-org-mongos=4.2.6 \
+          mongodb-org-tools=4.2.6
 
-    apt-get install -y nginx
+  apt-get install -y nginx
 }
 
 __configure && __main
