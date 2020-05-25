@@ -4,3 +4,5 @@ function __main {
   mkdir -p /var/run/puma
   chown -R ubuntu:ubuntu /var/run/puma
 }
+
+__main
