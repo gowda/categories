@@ -19,20 +19,20 @@ permissions:
 hooks:
   BeforeInstall:
     - location: scripts/install_dependencies
-      timeout: 300
+      timeout: 6000
       runas: root
     - location: scripts/install_ruby
-      timeout: 300
+      timeout: 6000
       runas: ubuntu
   AfterInstall:
     - location: scripts/bundle_install
-      timeout: 300
+      timeout: 6000
       runas: ubuntu
   ApplicationStart:
     - location: scripts/start_puma
-      timeout: 300
+      timeout: 6000
       runas: root
   ApplicationStop:
     - location: scripts/stop_puma
-      timeout: 300
+      timeout: 6000
       runas: root
