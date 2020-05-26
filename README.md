@@ -1,6 +1,6 @@
 # react.ts.template
-![](https://github.com/gowda/react.ts.template/workflows/lint-and-tests/badge.svg)
-![](https://github.com/gowda/react.ts.template/workflows/features/badge.svg)
+![](https://github.com/gowda/categories-client/workflows/lint-and-tests/badge.svg)
+![](https://github.com/gowda/categories-client/workflows/features/badge.svg)
 
 template for react application in typescript.
 
@@ -24,32 +24,15 @@ $ npm run server
 ```
 
 Development server listens at [http://localhost:3000](http://localhost:3000).
-Can be changed by updating [webpack.development.ts](webpack.development.ts#L12).
 
 #### Run linter
 ```bash
 $ npm run lint
 ```
 
-[TSLint](https://palantir.github.io/tslint/) is configured to extend from
-[tslint:recommended](https://github.com/palantir/tslint/blob/master/src/configs/recommended.ts)
-
-Configuratin is in [tslint.json](tslint.json)
-
 #### Run unit tests
 ```bash
 $ npm run test
-```
-
-#### Run cucumber tests
-```bash
-$ npm run features
-```
-
-Server running at [http://localhost:3000](http://localhost:3000) is required
-for cucumber tests. Run `webpack-dev-server` using:
-```bash
-$ npm run server
 ```
 
 ## License
