@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
 import { PUSH_TO_SELECTED_CATEGORIES } from '../reducers/selected-categories';
 import { connect } from 'react-redux';
+import { getProductsFor } from '../actions/products';
+import { ThunkDispatch } from 'redux-thunk';
 
 interface OwnProps {
   label: string;
@@ -19,10 +20,13 @@ const CategoryComponent = ({ label, handleClick }: Props) => (
   </a>
 );
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps): Props => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>, ownProps: OwnProps): Props => {
   return {
     ...ownProps,
-    handleClick: (value) => dispatch({type: PUSH_TO_SELECTED_CATEGORIES, value}),
+    handleClick: (value) => {
+      dispatch({type: PUSH_TO_SELECTED_CATEGORIES, value});
+      dispatch(getProductsFor(value));
+    }
   }
 };
 

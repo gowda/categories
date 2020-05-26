@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { RootState } from '../reducers';
 import { connect } from 'react-redux';
-import { UPDATE_SEARCH_QUERY } from '../reducers/search-query';
-import { Dispatch } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { updateSearchQuery, search } from '../actions/search-query';
 
 interface Props {
   query: string;
@@ -15,12 +15,14 @@ const SearchFormComponent = ({query, onQueryChange, onSearch}: Props) => (
     <input
       className="form-control mr-4 flex-grow-1"
       autoComplete="off"
-      type="text"
+      type="search"
       value={query}
       onChange={(e) => onQueryChange(e.target.value)}
       onKeyUp={(e) => e.key === 'Enter' && onSearch(query)}
     />
-    <button className="btn btn-success" onClick={(_) => onSearch(query)}>Search</button>
+    <button className="btn btn-success" onClick={(_) => onSearch(query)}>
+      Search
+    </button>
   </div>
 );
 
@@ -28,10 +30,11 @@ const mapStateToProps = (state: RootState) => {
   return { query: state.query }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => {
   return {
-    onQueryChange: (q: string) => dispatch({type: UPDATE_SEARCH_QUERY, value: q}),
-    onSearch: (q: string) => console.log('searching for', q),
+    onQueryChange: (q: string) => dispatch(updateSearchQuery(q)),
+    onSearch: (q: string) => dispatch(search(q)),
   }
 }
 
