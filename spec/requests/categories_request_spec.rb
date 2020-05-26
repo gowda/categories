@@ -116,4 +116,60 @@ describe 'Categories', type: :request do
       end
     end
   end
+
+  describe 'POST /api/categories/:id/children' do
+    let(:category) { Category.create!(label: 'parent category test label') }
+
+    context 'without parameters' do
+      it 'returns 422' do
+        post "/api/categories/#{category.id}/children",
+             headers: { 'Accept' => 'application/json' }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)).to be_an(Hash)
+        expect(JSON.parse(response.body)).to match(
+          a_hash_including(
+            'message' => 'Validation failed',
+            'errors' => a_hash_including('label' => ["can't be blank"])
+          )
+        )
+      end
+    end
+
+    context 'label' do
+      context 'when blank' do
+        it 'returns 422' do
+          post "/api/categories/#{category.id}/children",
+               params: { label: '' },
+               headers: { 'Accept' => 'application/json' }
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(JSON.parse(response.body)).to be_an(Hash)
+          expect(JSON.parse(response.body)).to match(
+            a_hash_including(
+              'message' => 'Validation failed',
+              'errors' => a_hash_including('label' => ["can't be blank"])
+            )
+          )
+        end
+      end
+
+      context 'when not blank' do
+        it 'creates category' do
+          post "/api/categories/#{category.id}/children",
+               params: { label: 'test label' },
+               headers: { 'Accept' => 'application/json' }
+
+          expect(response).to have_http_status(:created)
+          expect(JSON.parse(response.body)).to be_an(Hash)
+          expect(JSON.parse(response.body)).to match(
+            a_hash_including(
+              'id',
+              'label' => 'test label'
+            )
+          )
+        end
+      end
+    end
+  end
 end

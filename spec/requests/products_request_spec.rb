@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'Products', type: :request do
   let!(:category) { Category.create!(label: 'parent category') }
 
-  describe 'GET /api/products' do
+  describe 'GET /api/categories/:category_id/products' do
     context 'when no product is present' do
       it 'returns an empty array' do
         get api_category_products_path(category_id: category.id),
@@ -19,7 +19,7 @@ describe 'Products', type: :request do
     context 'when present' do
       let!(:products) do
         (0..20).map do |n|
-          category.products.create!(
+          category.create_product(
             title: "test title #{n}",
             description: "test description #{n}",
             price: "test price #{n}"
@@ -49,9 +49,59 @@ describe 'Products', type: :request do
         end
       end
     end
+
+    context 'nesting of categories' do
+      let!(:category_level_1) { Category.create!(label: 'category level 1 label') }
+      let!(:category_level_1a) { Category.create!(label: 'category level 1a label') }
+      let!(:category_level_2) { category_level_1.create_child(label: 'category level 2 label') }
+      let!(:category_level_3) { category_level_2.create_child(label: 'category level 3 label') }
+      let!(:category_level_4) { category_level_3.create_child(label: 'category level 4 label') }
+      let!(:category_level_5) { category_level_4.create_child(label: 'category level 5 label') }
+
+      context 'when present' do
+        let!(:products) do
+          [
+            category_level_1,
+            category_level_1a,
+            category_level_2,
+            category_level_3,
+            category_level_4,
+            category_level_5
+          ].map do |category|
+            category.create_product(
+              title: "test title #{category.label}",
+              description: "test description #{category.label}",
+              price: "test price #{category.label}"
+            )
+          end
+        end
+
+        context 'at level 1' do
+          it 'returns products for category & its subcategories' do
+            get api_category_products_path(category_id: category_level_1.id),
+                headers: { 'Accept' => 'application/json' }
+
+            expect(JSON.parse(response.body)).to be_an(Array)
+            expect(JSON.parse(response.body)).not_to be_empty
+            expect(JSON.parse(response.body).length).to eql(5)
+          end
+
+          it 'returns does not include products from categories tree' do
+            get api_category_products_path(category_id: category_level_1.id),
+                headers: { 'Accept' => 'application/json' }
+
+            expect(JSON.parse(response.body)).to be_an(Array)
+            expect(JSON.parse(response.body)).not_to be_empty
+            JSON.parse(response.body).each do |product|
+              expect(product['title']).not_to match(category_level_1a.label)
+            end
+          end
+        end
+      end
+    end
   end
 
-  describe 'GET /api/products/:id' do
+  describe 'GET /api/categories/:category_id/products/:id' do
     context 'with non-existent id' do
       it 'returns 404' do
         get api_category_product_path(category_id: category.id, id: 'non-existent-id'),
@@ -65,7 +115,7 @@ describe 'Products', type: :request do
 
     context 'when present' do
       let(:product) do
-        category.products.create!(
+        category.create_product(
           title: 'test title',
           description: 'test description',
           price: 'test price'
@@ -83,7 +133,7 @@ describe 'Products', type: :request do
     end
   end
 
-  describe 'POST /api/products' do
+  describe 'POST /api/categories/:category_id/products' do
     context 'without parameters' do
       it 'returns 422' do
         post api_category_products_path(category_id: category.id),
@@ -143,7 +193,8 @@ describe 'Products', type: :request do
               'id',
               'title' => 'test title',
               'description' => 'test description',
-              'price' => 'test price'
+              'price' => 'test price',
+              'categories' => [category.path]
             )
           )
         end

@@ -5,7 +5,7 @@ module Api
     before_action :find_category
 
     def index
-      @products = @category.products.page(params[:page])
+      @products = @category.all_products.page(params[:page])
     end
 
     def show
@@ -13,7 +13,7 @@ module Api
     end
 
     def create
-      @product = @category.products.create!(product_params)
+      @product = @category.create_product(product_params)
 
       render :show, status: 201
     end

@@ -7,9 +7,13 @@ class Product
   field :description, type: String
   field :price, type: String
 
-  embedded_in :category, class_name: 'Category', inverse_of: :products
+  field :categories, type: Array, default: []
 
   validates :title, presence: true
   validates :description, presence: true
   validates :price, presence: true
+
+  def add_category(category)
+    push(categories: [category.path])
+  end
 end
