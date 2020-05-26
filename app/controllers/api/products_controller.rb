@@ -4,6 +4,12 @@ module Api
   class ProductsController < ApplicationController
     before_action :find_category, only: %i[index show create]
 
+    def meta_index
+      @products = Product.all
+
+      render :index
+    end
+
     def index
       @products = @category.all_products.page(params[:page])
     end

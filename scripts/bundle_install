@@ -10,6 +10,7 @@ function __configure {
 
 function __main {
   RAILS_ENV=production bundle install --jobs 4 --retry 3
+  RAILS_ENV=production bundle exec rake db:mongoid:create_indexes
 }
 
 __configure && __main

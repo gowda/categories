@@ -11,6 +11,7 @@ Rails.application.routes.draw do
         post '/children', to: 'categories#create_child'
       end
 
+      get '/products', to: 'products#meta_index'
       get '/search', to: 'products#search'
     end
   end
