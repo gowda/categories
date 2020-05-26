@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 (0..10).map { |n| Category.create!(label: "Root label #{n}") }
 
 (0..10).map do |n|
