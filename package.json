@@ -1,7 +1,7 @@
 {
-  "name": "react.ts.template",
+  "name": "categories-client",
   "version": "0.42.0",
-  "description": "react application template in typescript",
+  "description": "web client for gowda/categories-api",
   "main": "src/index.ts",
   "scripts": {
     "lint": "tslint --config tslint.json --project tsconfig.json",
