@@ -1,0 +1,11 @@
+#!/bin/bash
+
+function __init {
+  systemctl daemon-reload
+}
+
+function __main {
+  systemctl start puma.service
+}
+
+__init && __main

@@ -1,0 +1,46 @@
+version: 0.0
+os: linux
+files:
+  - source: api.categories.conf
+    destination: /etc/nginx/sites-available
+  - source: puma.service
+    destination: /etc/systemd/system/
+  - source: /
+    destination: /opt/categories-api
+permissions:
+  - object: /opt/categories-api
+    owner: ubuntu
+    group: ubuntu
+    mode: 775
+hooks:
+  BeforeInstall:
+    - location: scripts/install_dependencies
+      timeout: 6000
+      runas: root
+    - location: scripts/install_ruby
+      timeout: 6000
+      runas: ubuntu
+    - location: scripts/cleanup_previous
+      timeout: 6000
+      runas: root
+    - location: scripts/setup_puma
+      timeout: 6000
+      runas: root
+  AfterInstall:
+    - location: scripts/setup_nginx
+      timeout: 300
+      runas: root
+    - location: scripts/setup_mongod
+      timeout: 300
+      runas: root
+    - location: scripts/bundle_install
+      timeout: 6000
+      runas: ubuntu
+  ApplicationStart:
+    - location: scripts/start_puma
+      timeout: 6000
+      runas: root
+  ApplicationStop:
+    - location: scripts/stop_puma
+      timeout: 6000
+      runas: root

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+function __main {
+  ln -s /etc/nginx/sites-available/api.categories.conf /etc/nginx/sites-enabled/
+
+  service nginx reload
+}
+
+__main

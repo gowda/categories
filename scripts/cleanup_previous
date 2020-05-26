@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function __main {
+  rm -rf /opt/categories-api
+
+  mkdir -p /opt/categories-api
+  chown -R ubuntu:ubuntu /opt/categories-api
+}
+
+__main

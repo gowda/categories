@@ -36,3 +36,21 @@ jobs:
         run: bin/rake cop
       - name: RSpec
         run: bin/rake spec
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' }}
+    needs: build
+    steps:
+    - uses: actions/checkout@v2
+    - name: Push to AWS CodeDeploy
+      run: |
+        aws deploy create-deployment \
+          --application-name categories-api \
+          --deployment-config-name CodeDeployDefault.OneAtATime \
+          --deployment-group-name categories-api-deployment-group \
+          --description "Deployment from master at $(date)" \
+          --github-location repository=gowda/categories-api,commitId=$(git rev-parse HEAD)
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
