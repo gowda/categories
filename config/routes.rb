@@ -5,7 +5,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     constraints format: :json do
-      resources :categories, only: %i[index show create]
+      resources :categories, only: %i[index show create] do
+        resources :products, only: %i[index show create]
+      end
     end
   end
 end
