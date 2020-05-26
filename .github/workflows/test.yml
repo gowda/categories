@@ -34,6 +34,8 @@ jobs:
           bundle install --retry 3
       - name: Create text search index
         run: bin/rake db:mongoid:create_indexes
+        env:
+          RAILS_ENV: 'test'
       - name: Rubocop
         run: bin/rake cop
       - name: RSpec
