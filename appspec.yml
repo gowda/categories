@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: api.categories.conf
-    destination: /etc/nginx/sites-enabled
+    destination: /etc/nginx/sites-available
   - source: puma.service
     destination: /etc/systemd/system/
   - source: /
