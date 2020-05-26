@@ -2,7 +2,7 @@
 
 module Api
   class ProductsController < ApplicationController
-    before_action :find_category
+    before_action :find_category, only: %i[index show create]
 
     def index
       @products = @category.all_products.page(params[:page])
@@ -16,6 +16,12 @@ module Api
       @product = @category.create_product(product_params)
 
       render :show, status: 201
+    end
+
+    def search
+      @products = Product.search(params[:q]).page(params[:page])
+
+      render :index
     end
 
     private

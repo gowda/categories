@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
         post '/children', to: 'categories#create_child'
       end
+
+      get '/search', to: 'products#search'
     end
   end
 end

@@ -13,6 +13,12 @@ class Product
   validates :description, presence: true
   validates :price, presence: true
 
+  index title: 'text', description: 'text'
+
+  def self.search(query)
+    where('$text' => { '$search' => query.to_s })
+  end
+
   def add_category(category)
     push(categories: [category.path])
   end
