@@ -1,4 +1,4 @@
-# react.ts.template
+# categories-client
 ![](https://github.com/gowda/categories-client/workflows/lint-and-tests/badge.svg)
 ![](https://github.com/gowda/categories-client/workflows/features/badge.svg)
 
