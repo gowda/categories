@@ -2,17 +2,9 @@
 ![](https://github.com/gowda/categories-client/workflows/lint-and-tests/badge.svg)
 ![](https://github.com/gowda/categories-client/workflows/features/badge.svg)
 
-template for react application in typescript.
+web client for [categories-api](https://github.com/gowda/categories-api)
 
 ## Usage
-`react-app` is assumed as name of the application to be created.
-
-#### Clone the repository
-```bash
-$ git clone git@github.com:gowda/react.ts.template.git react-app
-$ cd react-app
-```
-
 #### Install dependencies
 ```bash
 $ npm install
