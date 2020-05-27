@@ -15,7 +15,7 @@ const config: Configuration = merge(common, {
         {
           attributes: {
             name: 'base-api-endpoint',
-            value: 'http://api.categories.supertiny.in',
+            content: 'http://api.categories.supertiny.in',
           }
         }
       ]
