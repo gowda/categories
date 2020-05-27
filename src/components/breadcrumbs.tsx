@@ -1,16 +1,24 @@
 import * as React from 'react';
+import { Category } from '../reducers/categories';
 
 interface Props {
-  labels: string[];
+  categories: Category[];
+  handleClick: (id: string, index: number) => void;
 }
 
-export default ({ labels }: Props) => (
+export default ({ categories, handleClick }: Props) => (
   <nav aria-label="breadcrumb">
     <ol className="breadcrumb">
-      {labels.slice(0, labels.length - 1).map((label, index) => <li key={`${label}-${index}`} className="breadcrumb-item"><a href="#">{label}</a></li>)}
-      <li key='active-breadcrumb' className="breadcrumb-item active" aria-current="page">
-        {labels[labels.length - 1]}
-      </li>
+      {categories.map(({id, label}, index) => (
+        <li
+          key={`${label}-${index}`}
+          className={`breadcrumb-item ${index === categories.length - 1 ? 'active' : ''}`}
+          >
+          <a href='#' onClick={(e) => { e.preventDefault(); handleClick(id, index) }}>
+            {label}
+          </a>
+        </li>
+      ))}
     </ol>
   </nav>
 );

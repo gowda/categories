@@ -25,6 +25,11 @@ export function fetchCategories(): Promise<Category[]> {
     .then((response: AxiosResponse<any>) => (response.data as any as Category[]));
 }
 
+export function fetchCategoriesFor(id: string): Promise<Category[]> {
+  return httpGet(`api/categories/${id}/children`)
+    .then((response: AxiosResponse<any>) => (response.data as any as Category[]));
+}
+
 export function getCategory(id: string): Promise<Category> {
   return httpGet(`api/categories/${id}`)
     .then((response: AxiosResponse<any>) => (response as any as Category));

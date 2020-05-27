@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ProductComponent from './product';
+import ProductListItem from './product-list-item';
 import { Product } from '../reducers/products';
 
 const partition = (array: Product[], size: number) => {
@@ -27,8 +27,8 @@ export default ({items}: Props) => (
 
     {partition(items, 3).map((products, sliceIndex) => (
       <div className="d-flex flex-row mb-4 align-items-start" key={sliceIndex}>
-        {products.map((product, index) => (
-          <ProductComponent {...product} key={sliceIndex + index}/>
+        {products.map((product) => (
+          <ProductListItem {...product} key={product.id}/>
         ))}
       </div>
     ))}

@@ -53,6 +53,11 @@ export function fetchProductsFor(categoryId: string): Promise<Product[]> {
     .then((response: AxiosResponse<any>) => (response as any as Product[]));
 }
 
+export function fetchProductsMatching(query: string): Promise<Product[]> {
+  return httpGet('api/search', {q: query})
+    .then((response: AxiosResponse<any>) => (response as any as Product[]));
+}
+
 interface CreateProductParams {
   title: string;
   description: string;

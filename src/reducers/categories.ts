@@ -1,6 +1,7 @@
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
 
 export interface Category {
+  id: string;
   label: string;
 }
 

@@ -1,4 +1,4 @@
-name: lint-and-tests
+name: lint-test-and-deploy
 
 on: [push, pull_request]
 

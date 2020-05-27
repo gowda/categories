@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import CategoryComponent from './category';
 import { Category } from '../reducers/categories';
+
+import CategoryContainer from '../containers/category';
 
 interface Props {
   items: Category[];
@@ -12,6 +13,8 @@ export default ({items}: Props) => (
     <div className="mb-3">
       <h4>Categories</h4>
     </div>
-    {items.map((category, index) => (<CategoryComponent key={`${category}-${index}`} {...category}/>))}
+    {items.map((category, index) => (
+      <CategoryContainer key={`${category}-${index}`} {...category}/>
+    ))}
   </div>
 );
