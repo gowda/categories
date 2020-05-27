@@ -11,7 +11,7 @@ export default ({ categories, handleClick }: Props) => (
     <ol className="breadcrumb">
       {categories.map(({id, label}, index) => (
         <li
-          key={`${label}-${index}`}
+          key={id}
           className={`breadcrumb-item ${index === categories.length - 1 ? 'active' : ''}`}
           >
           <a href='#' onClick={(e) => { e.preventDefault(); handleClick(id, index) }}>

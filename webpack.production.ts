@@ -1,9 +1,26 @@
 import merge from 'webpack-merge';
-import common from './webpack.common';
+import HtmlWebpackTagsPlugin from 'html-webpack-tags-plugin';
 import { Configuration } from 'webpack';
+
+import common from './webpack.common';
 
 const config: Configuration = merge(common, {
   mode: 'production',
+  plugins: [
+    new HtmlWebpackTagsPlugin({
+      tags: ['custom.css'],
+      append: true,
+      publicPath: '/css',
+      metas: [
+        {
+          attributes: {
+            name: 'base-api-endpoint',
+            value: 'http://api.categories.supertiny.in',
+          }
+        }
+      ]
+    }),
+  ],
 });
 
 export default config;
