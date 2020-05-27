@@ -12,6 +12,8 @@ class Category
   before_create :set_parent
   before_create :set_path
 
+  scope :root, -> { where(parent: '/') }
+
   def set_path
     return if attribute_present?(:path)
 

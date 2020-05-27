@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         resources :products, only: %i[index show create]
 
         post '/children', to: 'categories#create_child'
+        get '/children', to: 'categories#children_index'
       end
 
       get '/products', to: 'products#meta_index'
