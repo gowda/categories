@@ -7,6 +7,17 @@
 $ bundle install
 ```
 
+### Setup data
+Seed data:
+```bash
+$ bin/rails db:seed
+```
+
+Create text indexes:
+```bash
+$ bin/rails db:mongoid:create_indexes
+```
+
 ### Development server
 ```bash
 $ bin/rails server
