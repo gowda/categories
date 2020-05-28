@@ -18,24 +18,12 @@ describe 'Categories', type: :request do
         (0..20).map { |n| Category.create!(label: "test label #{n}") }
       end
 
-      context 'pagination' do
-        it 'returns categories from first page' do
-          get '/api/categories', headers: { 'Accept' => 'application/json' }
+      it 'returns all categories' do
+        get '/api/categories', headers: { 'Accept' => 'application/json' }
 
-          expect(JSON.parse(response.body)).to be_an(Array)
-          expect(JSON.parse(response.body)).not_to be_empty
-          expect(JSON.parse(response.body).length).to eql(16)
-        end
-
-        context 'with page parameter' do
-          it 'returns categories from the page' do
-            get '/api/categories', params: { page: 2 }, headers: { 'Accept' => 'application/json' }
-
-            expect(JSON.parse(response.body)).to be_an(Array)
-            expect(JSON.parse(response.body)).not_to be_empty
-            expect(JSON.parse(response.body).length).to eql(5)
-          end
-        end
+        expect(JSON.parse(response.body)).to be_an(Array)
+        expect(JSON.parse(response.body)).not_to be_empty
+        expect(JSON.parse(response.body).length).to eql(21)
       end
 
       context 'when children present' do
@@ -43,32 +31,15 @@ describe 'Categories', type: :request do
           (0..20).map { |n| categories[n].create_child(label: "child test label #{n}") }
         end
 
-        context 'pagination' do
-          it 'returns root categories from first page' do
-            get '/api/categories', headers: { 'Accept' => 'application/json' }
+        it 'returns root categories' do
+          get '/api/categories', headers: { 'Accept' => 'application/json' }
 
-            expect(JSON.parse(response.body)).to be_an(Array)
-            expect(JSON.parse(response.body)).not_to be_empty
-            expect(JSON.parse(response.body).length).to eql(16)
+          expect(JSON.parse(response.body)).to be_an(Array)
+          expect(JSON.parse(response.body)).not_to be_empty
+          expect(JSON.parse(response.body).length).to eql(21)
 
-            JSON.parse(response.body).each do |category|
-              expect(category['label']).not_to match(/child/)
-            end
-          end
-
-          context 'with page parameter' do
-            it 'returns root categories from the page' do
-              get '/api/categories',
-                  params: { page: 2 }, headers: { 'Accept' => 'application/json' }
-
-              expect(JSON.parse(response.body)).to be_an(Array)
-              expect(JSON.parse(response.body)).not_to be_empty
-              expect(JSON.parse(response.body).length).to eql(5)
-
-              JSON.parse(response.body).each do |category|
-                expect(category['label']).not_to match(/child/)
-              end
-            end
+          JSON.parse(response.body).each do |category|
+            expect(category['label']).not_to match(/child/)
           end
         end
       end
@@ -200,7 +171,28 @@ describe 'Categories', type: :request do
           expect(JSON.parse(response.body)).to match(
             a_hash_including(
               'id',
-              'label' => 'test label'
+              'label' => 'test label',
+              'path' => "#{category.path}/test label"
+            )
+          )
+        end
+      end
+
+      context 'nested child' do
+        let!(:child_category) { category.create_child(label: 'child category label') }
+
+        it 'creates category' do
+          post "/api/categories/#{child_category.id}/children",
+               params: { label: 'test label' },
+               headers: { 'Accept' => 'application/json' }
+
+          expect(response).to have_http_status(:created)
+          expect(JSON.parse(response.body)).to be_an(Hash)
+          expect(JSON.parse(response.body)).to match(
+            a_hash_including(
+              'id',
+              'label' => 'test label',
+              'path' => "/#{category.label}/#{child_category.label}/test label"
             )
           )
         end
@@ -230,26 +222,13 @@ describe 'Categories', type: :request do
           (0..20).map { |n| category.create_child(label: "child test label #{n}") }
         end
 
-        context 'pagination' do
-          it 'returns categories from first page' do
-            get "/api/categories/#{category.id}/children",
-                headers: { 'Accept' => 'application/json' }
+        it 'returns categories' do
+          get "/api/categories/#{category.id}/children",
+              headers: { 'Accept' => 'application/json' }
 
-            expect(JSON.parse(response.body)).to be_an(Array)
-            expect(JSON.parse(response.body)).not_to be_empty
-            expect(JSON.parse(response.body).length).to eql(16)
-          end
-
-          context 'with page parameter' do
-            it 'returns categories from the page' do
-              get "/api/categories/#{category.id}/children",
-                  params: { page: 2 }, headers: { 'Accept' => 'application/json' }
-
-              expect(JSON.parse(response.body)).to be_an(Array)
-              expect(JSON.parse(response.body)).not_to be_empty
-              expect(JSON.parse(response.body).length).to eql(5)
-            end
-          end
+          expect(JSON.parse(response.body)).to be_an(Array)
+          expect(JSON.parse(response.body)).not_to be_empty
+          expect(JSON.parse(response.body).length).to eql(21)
         end
       end
     end

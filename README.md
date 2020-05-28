@@ -7,6 +7,17 @@
 $ bundle install
 ```
 
+### Setup data
+Seed data:
+```bash
+$ bin/rails db:seed
+```
+
+Create text indexes:
+```bash
+$ bin/rails db:mongoid:create_indexes
+```
+
 ### Development server
 ```bash
 $ bin/rails server
@@ -47,12 +58,6 @@ Body:
   },
   ...
 ]
-```
-
-Only `16` entries are returned in the response.
-Further entries can be fetched by passing `page` parameter:
-```
-GET /api/categories?page=2
 ```
 
 ### Get category details

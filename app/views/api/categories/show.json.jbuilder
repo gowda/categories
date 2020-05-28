@@ -2,3 +2,4 @@
 
 json.id @category.id.to_s
 json.label @category.label
+json.path @category.path
