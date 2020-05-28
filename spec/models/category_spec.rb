@@ -52,6 +52,19 @@ describe Category, type: :model do
           "/#{category.label}/#{category_level_1.label}"
         )
       end
+
+      context 'grandchild' do
+        let!(:category_level_2) do
+          category_level_1.create_child(label: 'level 2 label')
+        end
+
+        it 'sets path & parent for child category' do
+          expect(category_level_2.parent).to eql(category_level_1.path)
+          expect(category_level_2.path).to eql(
+            "/#{category.label}/#{category_level_1.label}/level 2 label"
+          )
+        end
+      end
     end
   end
 

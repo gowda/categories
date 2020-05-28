@@ -49,12 +49,6 @@ Body:
 ]
 ```
 
-Only `16` entries are returned in the response.
-Further entries can be fetched by passing `page` parameter:
-```
-GET /api/categories?page=2
-```
-
 ### Get category details
 ```
 GET /api/categories/1

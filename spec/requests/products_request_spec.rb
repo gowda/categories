@@ -27,26 +27,13 @@ describe 'Products', type: :request do
         end
       end
 
-      context 'pagination' do
-        it 'returns products from first page' do
-          get api_category_products_path(category_id: category.id),
-              headers: { 'Accept' => 'application/json' }
+      it 'returns products from first page' do
+        get api_category_products_path(category_id: category.id),
+            headers: { 'Accept' => 'application/json' }
 
-          expect(JSON.parse(response.body)).to be_an(Array)
-          expect(JSON.parse(response.body)).not_to be_empty
-          expect(JSON.parse(response.body).length).to eql(16)
-        end
-
-        context 'with page parameter' do
-          it 'returns products from the page' do
-            get api_category_products_path(category_id: category.id, page: 2),
-                headers: { 'Accept' => 'application/json' }
-
-            expect(JSON.parse(response.body)).to be_an(Array)
-            expect(JSON.parse(response.body)).not_to be_empty
-            expect(JSON.parse(response.body).length).to eql(5)
-          end
-        end
+        expect(JSON.parse(response.body)).to be_an(Array)
+        expect(JSON.parse(response.body)).not_to be_empty
+        expect(JSON.parse(response.body).length).to eql(21)
       end
     end
 
@@ -133,10 +120,10 @@ describe 'Products', type: :request do
     end
   end
 
-  describe 'POST /api/categories/:category_id/products' do
+  describe 'POST /api/products' do
     context 'without parameters' do
       it 'returns 422' do
-        post api_category_products_path(category_id: category.id),
+        post api_products_path,
              headers: { 'Accept' => 'application/json' }
 
         expect(response).to have_http_status(:unprocessable_entity)
@@ -157,7 +144,7 @@ describe 'Products', type: :request do
     context 'parameters' do
       context 'when blank' do
         it 'returns 422' do
-          post api_category_products_path(category_id: category.id),
+          post api_products_path,
                params: { title: '', description: '' },
                headers: { 'Accept' => 'application/json' }
 
@@ -178,7 +165,7 @@ describe 'Products', type: :request do
 
       context 'when not blank' do
         it 'creates product' do
-          post api_category_products_path(category_id: category.id),
+          post api_products_path,
                params: {
                  title: 'test title',
                  description: 'test description',
@@ -194,9 +181,64 @@ describe 'Products', type: :request do
               'title' => 'test title',
               'description' => 'test description',
               'price' => 'test price',
-              'categories' => [category.path]
+              'categories' => []
             )
           )
+        end
+
+        context 'categories' do
+          context 'non existent' do
+            it 'creates product' do
+              post api_products_path,
+                   params: {
+                     title: 'test title',
+                     description: 'test description',
+                     price: 'test price'
+                   },
+                   headers: { 'Accept' => 'application/json' }
+
+              expect(response).to have_http_status(:created)
+              expect(JSON.parse(response.body)).to be_an(Hash)
+              expect(JSON.parse(response.body)).to match(
+                a_hash_including(
+                  'id',
+                  'title' => 'test title',
+                  'description' => 'test description',
+                  'price' => 'test price',
+                  'categories' => []
+                )
+              )
+            end
+          end
+
+          context 'valid' do
+            let!(:categories) do
+              (0..5).map { |n| Category.create!(label: "test label #{n}") }
+            end
+
+            it 'creates product' do
+              post api_products_path,
+                   params: {
+                     title: 'test title',
+                     description: 'test description',
+                     price: 'test price',
+                     categories: categories.map(&:label)
+                   },
+                   headers: { 'Accept' => 'application/json' }
+
+              expect(response).to have_http_status(:created)
+              expect(JSON.parse(response.body)).to be_an(Hash)
+              expect(JSON.parse(response.body)).to match(
+                a_hash_including(
+                  'id',
+                  'title' => 'test title',
+                  'description' => 'test description',
+                  'price' => 'test price',
+                  'categories' => categories.map(&:path)
+                )
+              )
+            end
+          end
         end
       end
     end
