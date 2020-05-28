@@ -58,13 +58,7 @@ export function fetchProductsMatching(query: string): Promise<Product[]> {
     .then((response: AxiosResponse<any>) => (response as any as Product[]));
 }
 
-interface CreateProductParams {
-  title: string;
-  description: string;
-  price: string;
-}
-
-export function createProduct(params: CreateProductParams): Promise<Product> {
-  return httpPost('api/products', params)
+export function doCreateProduct(title: string, description: string, price: number, categories: string[]): Promise<Product> {
+  return httpPost('api/products', {title, description, price, categories})
     .then((response: AxiosResponse<any>) => (response as any as Product));
 }

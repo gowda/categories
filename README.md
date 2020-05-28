@@ -10,6 +10,8 @@ $ npm install
 ```
 
 #### Run development server
+Ensure that [categories-api](https://github.com/gowda/categories-api) server is running before running the development server.
+
 ```
 $ npm run server
 ```

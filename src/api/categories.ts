@@ -35,11 +35,7 @@ export function getCategory(id: string): Promise<Category> {
     .then((response: AxiosResponse<any>) => (response as any as Category));
 }
 
-interface CreateCategoryParams {
-  label: string;
-}
-
-export function createCategory(params: CreateCategoryParams): Promise<Category> {
-  return httpPost('api/categories', params)
+export function doCreateCategory(label: string, parent?: string): Promise<Category> {
+  return httpPost('api/categories', {label, parent})
     .then((response: AxiosResponse<any>) => (response as any as Category));
 }
