@@ -1,7 +1,7 @@
 {
-  "name": "categories-client",
+  "name": "client",
   "version": "0.42.0",
-  "description": "web client for gowda/categories-api",
+  "description": "web client for gowda/categories",
   "main": "src/index.ts",
   "scripts": {
     "lint": "tslint --config tslint.json --project tsconfig.json",
