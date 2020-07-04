@@ -1,0 +1,17 @@
+html, body {
+  height: 100%!important;
+  font-weight: bold;
+}
+
+div.app-container {
+  height: 100%!important;
+}
+
+.engraved {
+  background-color: #462E5C;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: rgba(245,245,245,0.7) 2px 2px 1px;
+}
