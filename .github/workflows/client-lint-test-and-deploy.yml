@@ -11,17 +11,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: client/node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+      - run: npm ci
       - name: Linter
         run: npm -C client run lint
   deploy:
@@ -33,17 +23,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - name: Cache node modules
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-node-modules
-      with:
-        path: client/node_modules
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('client/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+    - run: npm ci
     - name: Build
       run: npm -C run build
     - name: Push to AWS S3
