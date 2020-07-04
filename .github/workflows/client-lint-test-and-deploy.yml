@@ -29,7 +29,7 @@ jobs:
         cd client
         npm ci
     - name: Build
-      run: npm -C run build
+      run: npm -C client run build
     - name: Push to AWS S3
       run: |
         aws s3 sync --acl public-read --sse --delete client/dist/ s3://${AWS_S3_TARGET_BUCKET}
