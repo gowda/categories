@@ -13,7 +13,6 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 group :development, :test do
   gem 'byebug'
   gem 'database_cleaner-mongoid'
-  gem 'rspec-rails', '~> 4.0.0'
   gem 'rubocop', require: false
 end
 

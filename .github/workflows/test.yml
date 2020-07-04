@@ -38,8 +38,8 @@ jobs:
           RAILS_ENV: 'test'
       - name: Rubocop
         run: bin/rake cop
-      - name: RSpec
-        run: bin/rake spec
+      - name: Tests
+        run: bin/rake test
   deploy:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/master' }}
