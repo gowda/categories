@@ -11,7 +11,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - run: npm ci
+      - run: |
+          cd client
+          npm ci
       - name: Linter
         run: npm -C client run lint
   deploy:
@@ -23,7 +25,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - run: npm ci
+    - run: |
+        cd client
+        npm ci
     - name: Build
       run: npm -C run build
     - name: Push to AWS S3
