@@ -28,9 +28,9 @@ $ bin/rails server
 $ bin/rails cop
 ```
 
-### RSpec
+### Tests
 ```bash
-$ bin/rails spec
+$ bin/rails test
 ```
 
 ## API
