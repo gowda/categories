@@ -1,4 +1,4 @@
-name: test
+name: api-lint-test-and-deploy
 
 on: [push, pull_request]
 

@@ -1,4 +1,4 @@
-name: lint-test-and-deploy
+name: client-lint-test-and-deploy
 
 on: [push, pull_request]
 
