@@ -18,6 +18,7 @@ jobs:
         run: npm -C client run lint
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: build
     steps:
     - uses: actions/checkout@v2
