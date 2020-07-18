@@ -8,7 +8,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'mongoid', '~> 7.0.5'
 gem 'puma', '~> 4.1'
 gem 'rack-cors'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
+gem 'rails', '~> 6.0.0'
 
 group :development, :test do
   gem 'byebug'
