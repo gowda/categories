@@ -1,0 +1,40 @@
+[
+  {
+    "label": "Vehicles",
+    "categories": [
+      {
+        "label": "Cars",
+        "categories": [
+          {
+            "label": "Hyundai"
+          },
+          {
+            "label": "Maruthi"
+          }
+        ]
+      },
+      {
+        "label": "Bikes",
+        "categories": [
+          {
+            "label": "Bajaj"
+          },
+          {
+            "label": "Hero"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Mobiles",
+    "categories": [
+      {
+        "label": "Samsung"
+      },
+      {
+        "label": "Apple"
+      }
+    ]
+  }
+]
