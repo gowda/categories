@@ -17,8 +17,14 @@ FileUtils.chdir APP_ROOT do
   system! 'gem install bundler --conservative'
   system('bundle check') || system!('bundle install')
 
+  puts "\n== Installing client dependencies =="
+  system! 'npm --prefix client install'
+
   puts "\n== Removing old logs and tempfiles =="
   system! 'bin/rails log:clear tmp:clear'
+
+  puts "\n== Setup data =="
+  system! 'bin/rails db:setup'
 
   puts "\n== Restarting application server =="
   system! 'bin/rails restart'
