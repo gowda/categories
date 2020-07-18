@@ -1,0 +1,17 @@
+[
+  {
+    "title": "iPhone 8",
+    "description": "Best iPhone then",
+    "price": "INR 20,000"
+  },
+  {
+    "title": "iPhone X",
+    "description": "Best iPhone last year",
+    "price": "INR 42,000"
+  },
+  {
+    "title": "iPhone XR",
+    "description": "Best iPhone yet",
+    "price": "INR 49,000"
+  }
+]
