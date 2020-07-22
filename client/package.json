@@ -49,6 +49,7 @@
     "html-webpack-plugin": "^4.2.0",
     "html-webpack-tags-plugin": "^2.0.17",
     "jest": "^25.4.0",
+    "jsdom": "^16.3.0",
     "selenium-webdriver": "^4.0.0-alpha.7",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^7.0.1",
@@ -78,6 +79,6 @@
     "setupFilesAfterEnv": [
       "<rootDir>src/setupTests.ts"
     ],
-    "testEnvironment": "node"
+    "testEnvironment": "jsdom"
   }
 }

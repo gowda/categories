@@ -16,6 +16,8 @@ jobs:
           npm ci
       - name: Linter
         run: npm -C client run lint
+      - name: Tests
+        run: npm -C client run test
   deploy:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/master' }}
