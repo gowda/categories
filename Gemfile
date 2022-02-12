@@ -6,7 +6,7 @@ ruby '~> 2.6.0'
 
 gem 'jbuilder', '~> 2.7'
 gem 'mongoid', '~> 7.0.5'
-gem 'puma', '~> 4.1'
+gem 'puma', '~> 4.3'
 gem 'rack-cors'
 gem 'rails', '~> 6.0.0'
 
